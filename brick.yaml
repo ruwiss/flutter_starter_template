@@ -1,0 +1,27 @@
+name: starter_template
+description: "A Flutter starter app that includes support for an HTTP client, themes, routing, localization, and dependency injection."
+version: 1.1.6+9
+environment:
+  mason: "^0.1.0-dev.52"
+repository: "https://github.com/cem256/starter_template"
+vars:
+  project_name:
+    type: string
+    description: Proje adı
+    default: Example Project
+    prompt: Proje ismini girin
+  description:
+    type: string
+    description: Proje açıklaması
+    default: A new Flutter project.
+    prompt: Proje açıklaması girin
+  organization:
+    type: string
+    description: Paket adı girin
+    default: com.example
+    prompt: Projenizin paket adını girin
+  platforms:
+    type: string
+    description: Proje platformları
+    default: all
+    prompt: Proje hangi platformlarda çalışacak? Virgüllü şekilde girin.

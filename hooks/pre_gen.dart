@@ -2,17 +2,17 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
-  final progress = context.logger.progress("Running 'flutter create'");
+  final progress = context.logger.progress("Yeni proje oluşturuluyor");
 
   try {
     await _createFlutterApp(context);
-    progress.complete("Flutter App created!");
+    progress.complete("Proje oluşturuldu!");
   } catch (e) {
-    progress.fail("Something went wrong while running 'flutter create' : $e");
+    progress.fail("Proje oluşturulurken sorun oluştu 'flutter create' : $e");
   }
 }
 
-Future<ProcessResult> _createFlutterApp(HookContext context) async {
+Future<void> _createFlutterApp(HookContext context) async {
   String projectName = context.vars["project_name"];
   projectName = projectName.snakeCase;
   final description = context.vars["description"] as String;
@@ -28,7 +28,9 @@ Future<ProcessResult> _createFlutterApp(HookContext context) async {
     organization
   ];
 
-  if (platforms != "all") args.addAll(["--platforms=", platforms]);
+  if (platforms != "all")
+    args.addAll(["--platforms", platforms.replaceAll(" ", "")]);
 
-  return Process.run("C:/flutter/bin/flutter.bat", args);
+  final result = await Process.run("flutter", args, runInShell: true);
+  if (result.exitCode != 0) throw result.stderr;
 }

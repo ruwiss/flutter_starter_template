@@ -25,7 +25,6 @@ Future<void> run(HookContext context) async {
     FileToCopy(source: ".vscode", destination: "$projectName/"),
     FileToCopy(source: "environment", destination: "$projectName/"),
     FileToCopy(source: "lib", destination: "$projectName/"),
-    FileToCopy(source: "scripts", destination: "$projectName/"),
     FileToCopy(
         source: "pubspec.yaml", isFile: true, destination: "$projectName/"),
     FileToCopy(
@@ -39,11 +38,14 @@ Future<void> run(HookContext context) async {
   ];
 
   await _copyFiles(context, projectName, foldersToRemove, filesToCopy);
+  await _runFlutterPubGet(context, projectName);
+  await _runBuildRunnerScript(context, projectName);
 }
 
 Future<void> _copyFiles(HookContext context, String projectName,
     List<String> foldersToRemove, List<FileToCopy> filesToCopy) async {
-  final copyFileProgress = context.logger.progress("Copying required files");
+  final copyFileProgress =
+      context.logger.progress("Gerekli dosyalar kopyalanıyor");
 
   for (String folder in foldersToRemove) {
     final dir = Directory(folder);
@@ -53,22 +55,53 @@ Future<void> _copyFiles(HookContext context, String projectName,
   final List results = [];
   for (var fileMap in filesToCopy) {
     try {
-      final String target = "${fileMap.destination}/${fileMap.source}";
+      final String target = "${fileMap.destination}${fileMap.source}";
       if (fileMap.isFile) {
         results.add(File(fileMap.source).renameSync(target));
       } else {
         results.add(Directory(fileMap.source).renameSync(target));
       }
 
-      copyFileProgress.update("${fileMap.source} moved");
+      copyFileProgress.update("${fileMap.source} taşındı");
     } catch (e) {
       copyFileProgress.fail(e.toString());
     } finally {
       if (filesToCopy.length == results.length) {
-        copyFileProgress.complete(
-            "Files copied successfully! Please run /scripts commands");
-        exit(0);
+        copyFileProgress.complete("Dosyalar başarıyla kopyalandı!");
       }
     }
   }
+}
+
+Future<void> _runFlutterPubGet(HookContext context, String projectName) async {
+  final flutterPubGetProgress =
+      context.logger.progress("Flutter pub get: Proje hazırlanıyor");
+  final result = await Process.run("flutter", ["pub", "get"],
+      workingDirectory: projectName, runInShell: true);
+
+  flutterPubGetProgress.complete(result.stdout);
+  flutterPubGetProgress.complete(result.stderr);
+
+  _openCodeEditor(projectName);
+
+  flutterPubGetProgress.complete("Proje açılıyor..");
+}
+
+Future<void> _runBuildRunnerScript(
+    HookContext context, String projectName) async {
+  final buildRunnerProgress =
+      context.logger.progress("Build Runner: Çalıştırılıyor");
+  final result = await Process.run(
+      "dart", ["run", "build_runner", "build", "--delete-conflicting-outputs"],
+      workingDirectory: projectName, runInShell: true);
+
+  buildRunnerProgress.complete(result.stdout);
+  buildRunnerProgress.complete(result.stderr);
+
+  buildRunnerProgress.complete("Build Runner: işlem bitti");
+  exit(0);
+}
+
+void _openCodeEditor(String projectName) {
+  Process.run("code", ["."], workingDirectory: projectName, runInShell: true);
 }

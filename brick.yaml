@@ -3,7 +3,7 @@ description: "A Flutter starter app that includes support for an HTTP client, th
 version: 1.1.6+9
 environment:
   mason: "^0.1.0-dev.52"
-repository: "https://github.com/cem256/starter_template"
+repository: "https://github.com/ruwiss/flutter_starter_template.git"
 vars:
   project_name:
     type: string

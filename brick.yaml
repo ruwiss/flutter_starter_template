@@ -1,6 +1,6 @@
 name: starter_template
 description: "A Flutter starter app that includes support for an HTTP client, themes, routing, localization, and dependency injection."
-version: 1.1.6+9
+version: 1.0.0+1
 environment:
   mason: "^0.1.0-dev.52"
 repository: "https://github.com/ruwiss/flutter_starter_template.git"

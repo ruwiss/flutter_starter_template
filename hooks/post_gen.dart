@@ -19,6 +19,7 @@ Future<void> run(HookContext context) async {
     "$projectName/pubspec.yaml",
     "$projectName/analysis_options.yaml",
     "$projectName/.gitignore",
+    "$projectName/test"
   ];
 
   final List<FileToCopy> filesToCopy = [
@@ -79,8 +80,8 @@ Future<void> _runFlutterPubGet(HookContext context, String projectName) async {
   final result = await Process.run("flutter", ["pub", "get"],
       workingDirectory: projectName, runInShell: true);
 
-  flutterPubGetProgress.complete(result.stdout);
-  flutterPubGetProgress.complete(result.stderr);
+  flutterPubGetProgress.update(result.stdout);
+  flutterPubGetProgress.fail(result.stderr);
 
   _openCodeEditor(projectName);
 
@@ -95,8 +96,8 @@ Future<void> _runBuildRunnerScript(
       "dart", ["run", "build_runner", "build", "--delete-conflicting-outputs"],
       workingDirectory: projectName, runInShell: true);
 
-  buildRunnerProgress.complete(result.stdout);
-  buildRunnerProgress.complete(result.stderr);
+  buildRunnerProgress.update(result.stdout);
+  buildRunnerProgress.fail(result.stderr);
 
   buildRunnerProgress.complete("Build Runner: işlem bitti");
   exit(0);

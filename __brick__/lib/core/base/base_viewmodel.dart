@@ -30,8 +30,11 @@ mixin BusyAndErrorStateHelper on ChangeNotifier {
   /// Verilen busyKey meşgul ise busyData, değilse realData döner
   /// Eğer busyKey verilmemişse ve model meşgul ise busyData döner
   /// Eğer realData null ise busyData döner
-  T skeletonData<T>(
-      {required T? realData, required T busyData, Object? busyKey}) {
+  T skeletonData<T>({
+    required T? realData,
+    required T busyData,
+    Object? busyKey,
+  }) {
     final isBusyKeySupplied = busyKey != null;
     if ((isBusyKeySupplied && busy(busyKey)) || realData == null) {
       return busyData;
@@ -44,12 +47,18 @@ mixin BusyAndErrorStateHelper on ChangeNotifier {
 
   /// ViewModel'i meşgul olarak işaretler, geleceği çalıştırır ve tamamlandığında meşgul durumu kaldırır.
   /// throwException değeri false ise [Exception] yeniden fırlatılır
-  Future<T> runBusyFuture<T>(Future<T> busyFuture,
-      {Object? busyObject, bool throwException = false}) async {
+  Future<T> runBusyFuture<T>(
+    Future<T> busyFuture, {
+    Object? busyObject,
+    bool throwException = false,
+  }) async {
     _setBusyForModelOrObject(true, busyObject: busyObject);
     try {
-      final value = await runErrorFuture<T>(busyFuture,
-          key: busyObject, throwException: throwException);
+      final value = await runErrorFuture<T>(
+        busyFuture,
+        key: busyObject,
+        throwException: throwException,
+      );
       return value;
     } catch (e) {
       if (throwException) rethrow;
@@ -100,8 +109,11 @@ mixin BusyAndErrorStateHelper on ChangeNotifier {
     notifyListeners();
   }
 
-  Future<T> runErrorFuture<T>(Future<T> future,
-      {Object? key, bool throwException = false}) async {
+  Future<T> runErrorFuture<T>(
+    Future<T> future, {
+    Object? key,
+    bool throwException = false,
+  }) async {
     try {
       setErrorForModelOrObject(null, key: key);
       return await future;

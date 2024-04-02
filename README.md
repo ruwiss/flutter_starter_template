@@ -22,8 +22,7 @@ Flutter yeni proje şeması. HTTP servis, temalar, navigasyon, çoklu dil, anima
 
 ## Nasıl kullanılır? 🚀
 
-[mason_cli](https://github.com/felangel/mason/tree/master/packages/mason_cli) Kurulu olduğundan emin olun.
-[git](https://git-scm.com/) Kurulu olduğundan emin olun.
+[Mason CLI](https://github.com/felangel/mason/tree/master/packages/mason_cli) ve [Git](https://git-scm.com/) Kurulu olduğundan emin olun.
 
 ```sh
 dart pub global activate mason_cli

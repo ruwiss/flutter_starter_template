@@ -1,5 +1,5 @@
 name: starter_template
-description: "A Flutter starter app that includes support for an HTTP client, themes, routing, localization, and dependency injection."
+description: "Flutter yeni proje şeması. HTTP servis, temalar, navigasyon, çoklu dil, animasyonlar ve bağımlılık enjeksiyonu içerir."
 version: 1.0.0+1
 environment:
   mason: "^0.1.0-dev.52"

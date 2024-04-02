@@ -2,54 +2,44 @@
 
 [![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
 
-A Flutter starter app that includes support for an HTTP client, themes, routing, localization, and dependency injection.
+Flutter yeni proje şeması. HTTP servis, temalar, navigasyon, çoklu dil, animasyonlar ve bağımlılık enjeksiyonu içerir.
 
-## Brick Uses:
+## Kullanılanlar:
 
-- [dio](https://pub.dev/packages/dio) as an HTTP client
-- [pretty_dio_logger](https://pub.dev/packages/pretty_dio_logger) as a dio interceptor
-- [auto_route](https://pub.dev/packages/auto_route) for routing
-- [get_it](https://pub.dev/packages/get_it) for dependency injection
-- [envied](https://pub.dev/packages/envied) for secure handling of environment variables
-- [very_good_analysis](https://pub.dev/packages/very_good_analysis) for lint rules
+- [dio](https://pub.dev/packages/dio) http client
+- [pretty_dio_logger](https://pub.dev/packages/pretty_dio_logger) dio için log oluşturucu
+- [auto_route](https://pub.dev/packages/auto_route) navigasyon için
+- [get_it](https://pub.dev/packages/get_it) bağımlılık enjeksiyonu için
+- [envied](https://pub.dev/packages/envied) güvenli ortam değişkenleri oluşturmak için
+- [very_good_analysis](https://pub.dev/packages/very_good_analysis) kod yazım kuralları için
+- [animations](https://pub.dev/packages/animations/install) hoş animasyonlar için
 
-## Project Structure
+## Proje Yapısı
 
-- "app" folder holds files specific to this particular application.
-- "core" folder contains application-agnostic code that can be reused in other projects.
-- "feature" folder represents the app's feature set.
+- "app" klasörü uygulamanın özel dosyalarını içerir.
+- "core" klasörü, diğer projelerde yeniden kullanılabilecek uygulamadan bağımsız kodlar içerir.
+- "feature" klasörü uygulamanın sayfalarını (özelliklerini) içerir.
 
-## How to use 🚀
+## Nasıl kullanılır? 🚀
 
-Make sure you have the [mason_cli](https://github.com/felangel/mason/tree/master/packages/mason_cli) installed.
+[mason_cli](https://github.com/felangel/mason/tree/master/packages/mason_cli) Kurulu olduğundan emin olun.
+[git](https://git-scm.com/) Kurulu olduğundan emin olun.
 
 ```sh
 dart pub global activate mason_cli
 ```
 
-Add starter_template to your library
+Şemayı Mason'a ekleyin.
 
 ```sh
-mason add starter_template
+mason add [isim] --path [şema yolu]
 ```
 
-Generate your brick
+Daha sonra oluşturduğunuz şemayı kullanın
 
 ```sh
-mason make starter_template
+mason make [isim]
 ```
-
-## Warning ⚠️
-
-Ensure the environment/ folder is included in your .gitignore to protect sensitive configuration
-
-## Variables ✨
-
-| Variable       | Description                 | Default                | Type     |
-| -------------- | --------------------------- | ---------------------- | -------- |
-| `project_name` | Project Name                | Starter Template       | `string` |
-| `description`  | Project description         | A new Flutter project. | `string` |
-| `organization` | Organization of the project | com.example            | `string` |
 
 ## Output 📦
 
@@ -83,6 +73,8 @@ Ensure the environment/ folder is included in your .gitignore to protect sensiti
  ┃ ┗ 📂view
  ┃ ┃ ┗ 📜app.dart
  ┣ 📂core
+ ┃ ┣ 📂base
+ ┃ ┃ ┗ 📜base_viewmodel.dart
  ┃ ┣ 📂clients
  ┃ ┃ ┗ 📂network
  ┃ ┃ ┃ ┗ 📜network_client.dart
@@ -107,7 +99,3 @@ Ensure the environment/ folder is included in your .gitignore to protect sensiti
  ┗ 📜main_production.dart
 
 ```
-
-## Contributing
-
-Contributions are always welcomed and appreciated!
